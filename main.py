@@ -2,25 +2,6 @@ import json
 import os
 
 
-#class Quiz:
-    def __init__(self, question: str, choices: list[str], answer: int):
-        self.question = question
-        self.choices = choices
-        self.answer = answer  # 1, 2, 3, 4 중 하나
-
-    def to_dict(self):
-        return {
-            "question": self.question,
-            "choices": self.choices,
-            "answer": self.answer
-        }
-
-    def display(self):
-        print(f"\n{self.question}")
-        for i, choice in enumerate(self.choices, 1):
-            print(f"{i}. {choice}")
-
-
 class Quiz:
     def __init__(self, question: str, choices: list[str], answer: int):
         self.question = question
@@ -92,6 +73,64 @@ class QuizGame:
             Quiz("1 + 1 = ?", ["1", "2", "3", "4"], 2)
         ]
         self.save_data()  # 세팅 후 state.json 파일로 즉시 저장
+
+    def get_int_input(self, prompt: str, min_val: int, max_val: int) -> int:
+        """공통 입력 및 예외 처리 로직"""
+        while True:
+            try:
+                user_input = input(prompt).strip()  # 앞뒤 공백 제거
+
+                if not user_input:  # 빈 입력(Enter만 친 경우)
+                    print("⚠️ 입력값이 없습니다. 다시 입력해 주세요.")
+                    continue
+
+                value = int(user_input)  # 숫자로 변환 시도
+
+                if min_val <= value <= max_val:
+                    return value
+                else:
+                    print(f"⚠️ {min_val}~{max_val} 사이의 숫자를 입력해 주세요.")
+
+            except ValueError:  # 문자를 입력한 경우
+                print("⚠️ 잘못된 입력입니다. 숫자로 입력해 주세요.")
+            except (KeyboardInterrupt, EOFError):  # Ctrl+C 등으로 강제 종료 시도 시
+                print("\n\n프로그램을 안전하게 종료합니다. (데이터 저장 완료)")
+                self.save_data()
+                exit()
+
+    def display_menu(self):
+        print("\n========================================")
+        print("        🎯 나만의 퀴즈 게임 🎯")
+        print("========================================")
+        print("1. 퀴즈 풀기")
+        print("2. 퀴즈 추가")
+        print("3. 퀴즈 목록")
+        print("4. 점수 확인")
+        print("5. 종료")
+        print("========================================")
+
+    def run(self):
+        """메인 게임 루프"""
+        while True:
+            self.display_menu()
+            choice = self.get_int_input("선택: ", 1, 5)
+
+            if choice == 1:
+                print("\n🚧 퀴즈 풀기 기능은 개발 중입니다!")
+            elif choice == 2:
+                print("\n🚧 퀴즈 추가 기능은 개발 중입니다!")
+            elif choice == 3:
+                print("\n🚧 퀴즈 목록 기능은 개발 중입니다!")
+            elif choice == 4:
+                print("\n🚧 점수 확인 기능은 개발 중입니다!")
+            elif choice == 5:
+                print("\n게임을 종료합니다. 안녕히 가세요!")
+                self.save_data()
+                break
+
+if __name__ == "__main__":
+    game = QuizGame()
+    game.run()
 
 
 
