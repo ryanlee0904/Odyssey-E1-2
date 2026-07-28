@@ -26,3 +26,11 @@ Python과 Git을 학습하며 터미널에서 직접 동작하도록 만든 객�
 - 프로그램 종료 후에도 데이터를 유지하기 위해 사용됩니다.
 - `quizzes`: 각 퀴즈의 문제, 선택지, 정답 번호가 리스트로 저장됩니다.
 - `best_score`: 현재까지의 최고 정답 개수를 숫자로 저장합니다.
+
+## 7. 실행 화면 및 결과
+**게임 플레이**
+![게임 플레이](screenshots/gameplay1.png)
+![게임 플레이](screenshots/gameplay2.png)
+
+**Git 로그**
+![Git 로그](screenshots/log.png)
