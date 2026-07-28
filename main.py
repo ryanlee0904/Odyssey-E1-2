@@ -3,7 +3,7 @@ import os
 
 
 class Quiz:
-    def __init__(self, question: str, choices: list[str], answer: int):
+    def __init__(self, question: str, choices: list, answer: int):
         self.question = question
         self.choices = choices
         self.answer = answer
@@ -98,6 +98,54 @@ class QuizGame:
                 self.save_data()
                 exit()
 
+    def show_quiz_list(self):
+        """저장된 퀴즈 목록을 보여줍니다."""
+        print(f"\n📋 등록된 퀴즈 목록 (총 {len(self.quizzes)}개)")
+        print("-" * 40)
+        if not self.quizzes:
+            print("등록된 퀴즈가 없습니다.")
+        else:
+            for i, quiz in enumerate(self.quizzes, 1):
+                print(f"[{i}] {quiz.question}")
+        print("-" * 40)
+
+    def show_best_score(self):
+        """최고 점수를 보여줍니다."""
+        print(f"\n🏆 최고 점수: {self.best_score}점")
+        if self.best_score == 0:
+            print("아직 퀴즈를 푼 기록이 없거나 0점입니다. 퀴즈에 도전해 보세요!")
+        print("-" * 40)
+
+    def add_quiz(self):
+        print("\n📌 새로운 퀴즈를 추가합니다.")
+        question = input("문제를 입력하세요: ").strip()
+
+        if not question:
+            print("⚠️ 문제가 비어있습니다. 추가를 취소하고 메뉴로 돌아갑니다.")
+            return
+
+        choices = []
+        for i in range(1, 5):
+            while True:
+                choice = input(f"선택지 {i}: ").strip()
+                if choice:
+                    choices.append(choice)
+                    break
+                else:
+                    print("⚠️ 선택지는 비워둘 수 없습니다. 다시 입력해 주세요.")
+
+        # 앞서 만든 get_int_input을 활용하여 1~4 사이의 숫자만 받습니다.
+        answer = self.get_int_input("정답 번호 (1-4): ", 1, 4)
+
+        # 새로운 Quiz 객체를 만들고 목록에 추가한 뒤 즉시 저장합니다.
+        new_quiz = Quiz(question, choices, answer)
+        self.quizzes.append(new_quiz)
+        self.save_data()
+
+        print("\n✅ 퀴즈가 성공적으로 추가되고 저장되었습니다!")
+
+
+
     def display_menu(self):
         print("\n========================================")
         print("        🎯 나만의 퀴즈 게임 🎯")
@@ -116,17 +164,55 @@ class QuizGame:
             choice = self.get_int_input("선택: ", 1, 5)
 
             if choice == 1:
-                print("\n🚧 퀴즈 풀기 기능은 개발 중입니다!")
+                self.play_quiz()
             elif choice == 2:
-                print("\n🚧 퀴즈 추가 기능은 개발 중입니다!")
+                self.add_quiz()
             elif choice == 3:
-                print("\n🚧 퀴즈 목록 기능은 개발 중입니다!")
+                self.show_quiz_list()
             elif choice == 4:
-                print("\n🚧 점수 확인 기능은 개발 중입니다!")
+                self.show_best_score()
             elif choice == 5:
                 print("\n게임을 종료합니다. 안녕히 가세요!")
                 self.save_data()
                 break
+
+    def play_quiz(self):
+        if not self.quizzes:
+            print("\n⚠️ 등록된 퀴즈가 없습니다. 퀴즈를 먼저 추가해 주세요!")
+            return
+
+        print(f"\n📝 퀴즈를 시작합니다! (총 {len(self.quizzes)}문제)")
+        score = 0
+
+        for i, quiz in enumerate(self.quizzes, 1):
+            print("-" * 40)
+            print(f"[문제 {i}]")
+            quiz.display()  # Quiz 클래스에 만들어둔 출력 함수 사용
+
+            user_answer = self.get_int_input("\n정답 입력: ", 1, 4)
+
+            if user_answer == quiz.answer:
+                print("✅ 정답입니다!")
+                score += 1
+            else:
+                print(f"❌ 오답입니다. (정답: {quiz.answer}번)")
+
+        # 결과 출력 및 최고 점수 갱신
+        print("\n" + "=" * 40)
+        print(f"🏆 결과: {len(self.quizzes)}문제 중 {score}문제 정답!")
+
+        if score > self.best_score:
+            print(f"🎉 축하합니다! 새로운 최고 점수입니다! (기존: {self.best_score}점 -> 현재: {score}점)")
+            self.best_score = score
+            self.save_data()  # 점수가 갱신되었으니 파일에 즉시 저장
+        else:
+            print(f"현재 최고 점수는 {self.best_score}점입니다.")
+        print("=" * 40)
+
+
+
+
+
 
 if __name__ == "__main__":
     game = QuizGame()
