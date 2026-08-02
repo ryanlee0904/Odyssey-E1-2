@@ -8,7 +8,8 @@
                 "Bjarne",
                 "James"
             ],
-            "answer": 1
+            "answer": 1,
+            "hint": "제공된 힌트가 없습니다."
         },
         {
             "question": "HTML의 약자는?",
@@ -18,7 +19,8 @@
                 "Home Tool",
                 "Hyper Text Markup Language"
             ],
-            "answer": 4
+            "answer": 4,
+            "hint": "제공된 힌트가 없습니다."
         },
         {
             "question": "다음 중 파이썬의 기본 자료형이 아닌 것은?",
@@ -28,7 +30,8 @@
                 "array",
                 "dict"
             ],
-            "answer": 3
+            "answer": 3,
+            "hint": "제공된 힌트가 없습니다."
         },
         {
             "question": "Git에서 변경사항을 임시 저장하는 공간은?",
@@ -38,7 +41,8 @@
                 "Local Repository",
                 "Remote Repository"
             ],
-            "answer": 2
+            "answer": 2,
+            "hint": "제공된 힌트가 없습니다."
         },
         {
             "question": "1 + 1 = ?",
@@ -48,7 +52,8 @@
                 "3",
                 "4"
             ],
-            "answer": 2
+            "answer": 2,
+            "hint": "제공된 힌트가 없습니다."
         },
         {
             "question": "1*3 =",
@@ -58,8 +63,10 @@
                 "4",
                 "5"
             ],
-            "answer": 2
+            "answer": 2,
+            "hint": "제공된 힌트가 없습니다."
         }
     ],
-    "best_score": 6
+    "best_score": 6,
+    "history": []
 }
